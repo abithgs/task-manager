@@ -4,6 +4,7 @@ import com.iptiq.model.Process;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.TreeMap;
 
 /**
@@ -28,7 +29,8 @@ public class ProcessRepository {
 
     public synchronized Process removeProcess(long processId) {
         Process deletedProcess = processStore.remove(processId);
-        priorityStore.removeProcess(deletedProcess);
+        Optional.ofNullable(deletedProcess)
+                .ifPresent(priorityStore::removeProcess);
         return deletedProcess;
     }
 

@@ -13,12 +13,12 @@ public class TaskManagerClient {
         try (Scanner input = new Scanner(System.in)) {
             String taskManagerOption = readTaskManagerOption(input);
             String capacity = readTaskManagerCapacity(input);
-            TaskManager taskManager = taskManagerStrategy(taskManagerOption, capacity);
+            TaskManager taskManager = getTaskManagerStrategy(taskManagerOption, capacity);
             TaskMangerOperations.processCommand(taskManager);
         }
     }
 
-    private static TaskManager taskManagerStrategy(String taskManagerOption, String capacity) {
+    public static TaskManager getTaskManagerStrategy(String taskManagerOption, String capacity) {
         switch (Integer.parseInt(taskManagerOption)) {
             case 2:
                 return new FifoTaskManager(Integer.parseInt(capacity));
@@ -29,7 +29,7 @@ public class TaskManagerClient {
         }
     }
 
-    private static String readTaskManagerOption(Scanner input) {
+    public static String readTaskManagerOption(Scanner input) {
         System.out.println("Select TaskManager type to be used :\n" +
                 "1. Default Taskmanager\n" +
                 "2. FIFO Taskmanager\n" +
@@ -42,7 +42,7 @@ public class TaskManagerClient {
         return taskManagerOption;
     }
 
-    private static String readTaskManagerCapacity(Scanner input) {
+    public static String readTaskManagerCapacity(Scanner input) {
         System.out.println("Enter MAX capacity of TaskManager : ");
         String capacity = input.nextLine();
         while (!isNumericAndWithinRange(capacity, Integer.MAX_VALUE)) {
